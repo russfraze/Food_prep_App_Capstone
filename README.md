@@ -32,3 +32,8 @@ saving and editing whole recipies
 
 
 ## Schedule 
+Week 1: Define data models, routing views and page layout
+
+Week 2: User login / authentication system 
+
+Week 3: Overflow, Styling and finish
