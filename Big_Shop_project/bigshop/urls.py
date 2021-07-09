@@ -4,6 +4,7 @@ from . import views
 app_name = 'bigshop'
 
 urlpatterns = [
-    path('index/', views.index, name='index')
+    path('index/', views.index, name='index'),
+    path('save/', views.save, name='save')
 ]
 

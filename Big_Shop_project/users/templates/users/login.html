@@ -1,17 +1,17 @@
 {% extends 'bigshop/base.html' %}
+{% block title %}Login{% endblock %}
 
-<form class="col s12" action="" method="post">
+{% block content %}
+<form class="col s12" action="{% url 'users:login' %}" method="post">
     {% csrf_token %}
 
-    {% block title %}Login{% endblock %}
  
 
-    {% block content %}
 
     <div class="row">
         <div class="input-field col s12">
-            <input id="password" type="text" class="validate" name="username">
-            <label for="password">Username</label>
+            <input id="username" type="text" class="validate" name="username">
+            <label for="username">Username</label>
         </div>
     </div>
 
