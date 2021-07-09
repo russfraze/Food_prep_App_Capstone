@@ -1,0 +1,40 @@
+
+{% extends 'bigshop/base.html' %}
+
+{% block title %}Register{% endblock %}
+
+
+
+{% block content %}
+
+<form class="col s12" action="" method="POST">
+    {% csrf_token %}
+
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="username" type="text" class="validate" name="username">
+            <label for="username">Username</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="email" type="email" class="validate" name="email">
+            <label for="email">Email</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="password" type="password" class="validate" name="password">
+            <label for="password">Password</label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn">Register</button>
+
+    <div>Already a registered user? <a href="{% url 'users:login' %}">Login</a></div>
+
+</form>
+
+{% endblock %}
