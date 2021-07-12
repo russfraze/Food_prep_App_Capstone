@@ -15,7 +15,17 @@ Search recipies
 Save recipies and food profiles   
 Shopping list builder   
 Calorie and nutrient counter   
-Edit / customize recipies   
+Edit / customize recipies
+save grocery list
+
+
+NEXT STEPS:
+> Display saved recipes on Recipe Book page
+> Create delete button to delete recipes 
+> Create add to shopping list button 
+> Display ingredienst on Shopping List page by isle, display reicipe name with 
+> Make cross out button that turns shopping list item grey and adds line through 
+> Save shopping list 
 
 Walk through:   
 When the user visits the site, they see the home page where they are prompted to login or register. Once logged in, their profile / personal shopping list generator is displayed. 
