@@ -1,0 +1,55 @@
+{% extends 'bigshop/base.html' %}
+
+{% block content %}
+
+<div id="app">
+    {% csrf_token %}
+    <h1>Shopping List</h1>
+
+
+    <div class="row" v-for="recipe in recipes">
+        <h1>[[ recipe.name ]]</h1>
+    </div>
+
+
+
+</div>
+
+<script type="text/javascript">
+    // initialize Materialize components
+    M.AutoInit()
+
+    let app = new Vue({
+        el: '#app',
+        delimiters: ["[[", "]]"],
+
+        data: {
+            recipes: []
+        },
+
+        methods: {
+
+            getRecipes: function () {
+                axios({
+                    method: "get",
+                    url: '{% url "bigshop:get_saved_recipes" %}',
+                    params: {
+
+                    }
+                }).then((response) => {
+                    console.log(response.data)
+                    this.recipes = response.data.recipes
+                });
+            }
+
+        },
+
+        created: function () {
+            this.getRecipes()
+        }
+    })
+</script>
+
+
+
+{% endblock %}

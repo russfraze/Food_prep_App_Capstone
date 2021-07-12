@@ -11,7 +11,7 @@ class SavedRecipe(models.Model):
     carbs = models.CharField(max_length=20)
     fat = models.CharField(max_length=20)
     instructions = models.TextField()
-    users = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='saved_recipes')
 
     def __str__(self):
         return self.name
