@@ -19,26 +19,36 @@ def save(request):
     print(request.body)
     data_json = request.body
     recipe_data = json.loads(data_json)
-    recipe = SavedRecipe(name=recipe_data['title'], image=recipe_data['image'], source=recipe_data['details']['sourceUrl'], ingredients=recipe_data['ingredients'], calories=recipe_data['nutrition']['calories'], protein=recipe_data['nutrition']['protein'], carbs=recipe_data['nutrition']['carbs'], fat=recipe_data['nutrition']['fat'], instructions=recipe_data['instructions'], user=request.user )
+    recipe = SavedRecipe(name=recipe_data['title'], 
+        image=recipe_data['image'], 
+        source=recipe_data['details']['sourceUrl'], 
+        ingredients=json.dumps(recipe_data['ingredients']),
+        calories=recipe_data['nutrition']['calories'],
+        protein=recipe_data['nutrition']['protein'],
+        carbs=recipe_data['nutrition']['carbs'],
+        fat=recipe_data['nutrition']['fat'],
+        instructions=recipe_data['instructions'],
+        user=request.user )
     recipe.save()
     return HttpResponse('Yo!')
 
 
 def recipe_book(request):
     
-    return render(request, 'bigshop/book.html')
+    return render(request,'bigshop/book.html')
 
 def get_saved_recipes(request):
     recipes = SavedRecipe.objects.all()
     recipes_data = []
     for recipe in recipes:
         recipes_data.append({
+            'id': recipe.id,
             'name': recipe.name,
             'image': recipe.image,
             'source': recipe.source,
-            'ingredients': recipe.ingredients,
+            'ingredients': json.loads(recipe.ingredients),
             'calories': recipe.calories,
-            'protein:': recipe.protein,
+            'protein': recipe.protein,
             'carbs': recipe.carbs,
             'fat': recipe.fat,
             'instructions': recipe.instructions,
@@ -46,7 +56,12 @@ def get_saved_recipes(request):
         })
     return JsonResponse({'recipes': recipes_data})
 
-
+def delete(request):
+    print(request.GET['id'])
+    id = request.GET['id']
+    recipe = SavedRecipe.objects.get(id=id)
+    recipe.delete()
+    return HttpResponse('zap!')
 
 
 def grocery_list(request):

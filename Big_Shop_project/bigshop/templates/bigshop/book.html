@@ -4,11 +4,28 @@
 
 <div id="app">
     {% csrf_token %}
-    <h1>Shopping List</h1>
+    <h1>Your Recipes</h1>
 
 
     <div class="row" v-for="recipe in recipes">
         <h1>[[ recipe.name ]]</h1>
+        <img v-bind:src="recipe.image" alt="">
+        <p> Calories: [[ recipe.calories ]]</p>
+        <p> Protein: [[ recipe.protein ]]</p>
+        <p> Carbs: [[ recipe.carbs ]]</p>
+        <p> Fat: [[ recipe.fat ]]</p>
+
+        <div v-for="ingredient in recipe.ingredients">
+            <p>
+                [[ ingredient.amount]] [[ ingredient.unit ]] [[ ingredient.name ]]
+            </p>
+            
+        </div>
+
+        <div v-html="recipe.instructions"></div>
+
+        <button class="btn" v-on:click="deleteRecipe(recipe.id)">Delete</button>
+
     </div>
 
 
@@ -29,7 +46,7 @@
 
         methods: {
 
-            getRecipes: function () {
+            getRecipes: function() {
                 axios({
                     method: "get",
                     url: '{% url "bigshop:get_saved_recipes" %}',
@@ -37,9 +54,23 @@
 
                     }
                 }).then((response) => {
-                    console.log(response.data)
+                    // console.log(response.data.recipes)
                     this.recipes = response.data.recipes
                 });
+            },
+
+            deleteRecipe: function(id) {
+                console.log(id)
+                axios({
+                        method: 'get',
+                        url: '{% url "bigshop:delete" %}',
+                        params: {
+                            id: id
+                        }
+                    }).then(response => {
+                        this.getRecipes()
+                    })
+
             }
 
         },
