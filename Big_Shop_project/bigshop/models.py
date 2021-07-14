@@ -17,5 +17,12 @@ class SavedRecipe(models.Model):
         return self.name
 
 
+class SavedListItem(models.Model):
+    name = models.CharField(max_length=100)
+    amount = models.IntegerField()
+    unit = models.CharField(max_length=50)
+    aisle = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='saved_items')
+
 
 

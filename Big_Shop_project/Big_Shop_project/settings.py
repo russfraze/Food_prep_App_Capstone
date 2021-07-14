@@ -1,3 +1,5 @@
+import django_on_heroku
+django_on_heroku.settings(locals())
 from . import secrets
 from pathlib import Path
 
@@ -115,3 +117,4 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 API_KEY = secrets.my_key
+

@@ -1,0 +1,61 @@
+{% extends 'bigshop/base.html' %}
+
+{% block content %}
+
+<div id="app">
+    {% csrf_token %}
+    <h1>Your Shopping List</h1>
+
+
+    <!-- <div class="row" v-for="recipe in recipes">
+        <h1>[[ recipe.name ]]</h1>
+        <img v-bind:src="recipe.image" alt="">
+        <p> Calories: [[ recipe.calories ]]</p>
+        <p> Protein: [[ recipe.protein ]]</p>
+        <p> Carbs: [[ recipe.carbs ]]</p>
+        <p> Fat: [[ recipe.fat ]]</p>
+
+        <div v-for="ingredient in recipe.ingredients">
+            <p>
+                [[ ingredient.amount]] [[ ingredient.unit ]] [[ ingredient.name ]]
+            </p>
+            
+        </div>
+
+        <div v-html="recipe.instructions"></div>
+
+        <button class="btn" v-on:click="deleteRecipe(recipe.id)">Delete</button>
+        <button>Add to list</button>
+
+    </div> -->
+
+
+
+</div>
+
+<script type="text/javascript">
+    // initialize Materialize components
+    M.AutoInit()
+
+    let app = new Vue({
+        el: '#app',
+        delimiters: ["[[", "]]"],
+
+        data: {
+            recipes: []
+        },
+
+        methods: {
+
+
+        },
+
+        created: function () {
+            
+        }
+    })
+</script>
+
+
+
+{% endblock %}

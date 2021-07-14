@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 import json
-from .models import SavedRecipe
+from .models import SavedRecipe, SavedListItem
 
 @login_required
 def index(request):
@@ -65,5 +65,29 @@ def delete(request):
 
 
 def grocery_list(request):
-    return HttpResponse('Shopping list goes here!!')
+    return render(request,'bigshop/list.html')
+
+def add_ingredients(request):
+    print(request.GET['id'])
+    # look up the recipe given the id
+    # turn the ingredients into a list of dictionaries
+    # loop over those ingredients
+    # create a 'SavedListItem' for each ingredient and save it
+    id = request.GET['id']
+    recipe = SavedRecipe.objects.get(id=id)
+    ingredients_json = recipe.ingredients
+    ingredients_list = json.loads(ingredients_json)
+    for ingredient in ingredients_list:
+        list_item = SavedListItem(
+            amount = ingredient['amount'], 
+            unit= ingredient['unit'], 
+            name = ingredient['name'], 
+            aisle= ingredient['aisle'],
+            user= request.user)
+        list_item.save()
+        print(ingredient['name'],ingredient['aisle'])
+
+    # print(ingredients_list)
+
+    return HttpResponse('yo')
 
