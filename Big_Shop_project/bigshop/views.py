@@ -91,3 +91,17 @@ def add_ingredients(request):
 
     return HttpResponse('yo')
 
+
+def get_saved_list(request):
+    ingredients = SavedListItem.objects.all()
+    ingredients_data = []
+    for ingredient in ingredients:
+        ingredients_data.append({
+            'name': ingredient.name,
+            'amount': ingredient.amount,
+            'unit': ingredient.unit,
+            'aisle': ingredient.aisle,
+
+        })
+    return JsonResponse({'ingredients': ingredients_data})
+

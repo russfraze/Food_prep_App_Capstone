@@ -10,7 +10,8 @@ urlpatterns = [
     path('grocery_list/', views.grocery_list, name='grocery_list'),
     path('get_saved_recipes/', views.get_saved_recipes, name='get_saved_recipes'),
     path('delete/', views.delete, name='delete'),
-    path('add_ingredients/', views.add_ingredients, name='add_ingredients')
+    path('add_ingredients/', views.add_ingredients, name='add_ingredients'),
+    path('get_saved_list/', views.get_saved_list, name='get_saved_list')
 
 ]
 

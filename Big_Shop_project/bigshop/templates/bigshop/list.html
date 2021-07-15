@@ -7,27 +7,11 @@
     <h1>Your Shopping List</h1>
 
 
-    <!-- <div class="row" v-for="recipe in recipes">
-        <h1>[[ recipe.name ]]</h1>
-        <img v-bind:src="recipe.image" alt="">
-        <p> Calories: [[ recipe.calories ]]</p>
-        <p> Protein: [[ recipe.protein ]]</p>
-        <p> Carbs: [[ recipe.carbs ]]</p>
-        <p> Fat: [[ recipe.fat ]]</p>
-
-        <div v-for="ingredient in recipe.ingredients">
-            <p>
-                [[ ingredient.amount]] [[ ingredient.unit ]] [[ ingredient.name ]]
-            </p>
-            
-        </div>
-
-        <div v-html="recipe.instructions"></div>
-
-        <button class="btn" v-on:click="deleteRecipe(recipe.id)">Delete</button>
-        <button>Add to list</button>
-
-    </div> -->
+   
+    <div class="row" v-for="ingredient in ingredients">
+        <h1>[[ ingredient.name ]]</h1>
+        
+    </div>
 
 
 
@@ -42,16 +26,27 @@
         delimiters: ["[[", "]]"],
 
         data: {
-            recipes: []
+            ingredients: []
         },
 
         methods: {
+            getListItems: function() {
+                axios({
+                    method: "get",
+                    url: '{% url "bigshop:get_saved_list" %}',
+                    params: {
 
+                    }
+                }).then((response) => {
+                    this.recipes = response.data.ingredients
+                    console.log(response.data)
+                });
+            },
 
         },
 
         created: function () {
-            
+            this.getListItems()
         }
     })
 </script>
