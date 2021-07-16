@@ -1,26 +1,34 @@
 {% extends 'bigshop/base.html' %}
 
 {% block content %}
+<style>
+       .info-panel{
+            display: flex;
+            background-color: #002fa7;
+            color: white;
+        }
+</style>
+<!-- Page Content -->
+<div id="app">
 
-    <!-- Page Content -->
-    <div id="app">
-        {% csrf_token %}
-        <h1>[[ title ]]</h1>
+    <h1>[[ title ]]</h1>
 
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="password" type="password" class="validate">
-                <label for="password">Password</label>
-            </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="password" type="password" class="validate">
+            <label for="password">Password</label>
         </div>
+    </div>
 
-        <button class='btn' v-on:click="getRecipes">Search</button>
+    <button class='btn' v-on:click="getRecipes">Search</button>
 
-        <div class="row" v-for="(recipe,index) in recipes">
-            <!--include indicies in getDetails call -->
-            <h2 v-on:click="getDetails(recipe)">[[recipe.title]]</h2>
-            <img v-bind:src="recipe.image" alt="">
-            <div v-if="recipe.details">[[recipe.details.sourceUrl]]</div>
+    <div class="row" v-for="(recipe,index) in recipes">
+        <!--include indicies in getDetails call -->
+        <h2 v-on:click="getDetails(recipe)">[[recipe.title]]</h2>
+        <img v-bind:src="recipe.image" alt="">
+        <div v-if="recipe.details">[[recipe.details.sourceUrl]]</div>
+
+        <div class="info-panel">
             <div v-if="recipe.has_details">
                 <ul>
                     <li> calories: [[recipe.nutrition.calories]]</li>
@@ -36,151 +44,148 @@
             </div>
 
             <button v-if="recipe.has_details" v-on:click="saveRecipe(recipe)" class="btn">save</button>
-
         </div>
-
-
-
     </div>
 
 
-    <script type="text/javascript">
-        // initialize Materialize components
-        M.AutoInit()
 
-        let app = new Vue({
-            el: '#app',
-            delimiters: ["[[", "]]"],
-            data: {
-                title: 'Search Recipies',
-                search_term: 'kale',
-                recipes: [{
-                    name: '',
-                    image:'',
-                    sourceURL:'',
-                    ingredients:[],
-                    nutrition:
-                        {
-                        calories:'',
-                        protein:'',
-                        fat:'',
-                        carbs:'',
-                    }
-                    ,
-
-                }],
-            },
-
-            methods: {
-
-                saveRecipe: function(recipe){
-                    axios({
-                        method: 'post',
-                        url: '{% url "bigshop:save" %}',
-                        headers: {
-                            'X-CSRFToken': '{{ csrf_token }}'
-                        },
-                        data: recipe
-
-                    }).then(response => {
-                        console.log(response.data)
-                        
-                    })
-                },
-
-                getDetails: function (recipe) {
-                    console.log(recipe)
-                    axios({
-                        method: 'get',
-                        url: 'https://api.spoonacular.com/recipes/' + recipe.id + '/information?',
-                        params: {
-                            apiKey: "{{ key }}",
-
-                        }
-                    }).then((response) => {
-                        // console.log(response.data)
-                        // this.recipes_info = response.data
-                        recipe.details = response.data
-                        recipe.has_details = true
-                        recipe.ingredients = response.data.extendedIngredients
-                        recipe.instructions = response.data.instructions
-                        // console.log(this.recipes_info)
-                        console.log(recipe.ingredients)
-                        console.log(recipe.instructions)
-                    })
-                    // send another request to get nutritional info
-                    axios({
-                        method: 'get',
-                        url: 'https://api.spoonacular.com/recipes/' + recipe.id + '/nutritionWidget.json',
-                        params: {
-                            apiKey: "{{ key }}",
-                            
-                        }
-                    }).then((response) => {
-                        let data = response.data
-                        // console.log(response.data)
-                        // console.log(response.data.calories)
-                        // this.recipes_info = response.data
-                        recipe.nutrition.calories = data.calories
-                        recipe.nutrition.protein = data.protein
-                        recipe.nutrition.carbs = data.carbs
-                        recipe.nutrition.fat = data.fat
-                        console.log(recipe.nutrition)
-                        
-                    })
+</div>
 
 
-                },
+<script type="text/javascript">
+    // initialize Materialize components
+    M.AutoInit()
 
-                getRecipes: function (query) {
-                    axios({
-                        method: 'get',
-                        url: 'https://api.spoonacular.com/recipes/complexSearch',
-                        params: {
-                            apiKey: "{{ key }}",
-                            query: 'shrimp',
-                            number: 2,
-                        }
-                    }).then((response) => {
-                        let recipes = response.data.results
-                        for (let i=0; i<recipes.length; i++) {
-                            recipes[i].has_details = false
-                            recipes[i].details = {}
-                            recipes[i].nutrition = {}
-                        }
-                        this.recipes = recipes
-                        // this.recipes = response.data.results
-                        console.log(this.recipes)
-                        
-                        // for (i in this.recipes){
-                        //     // console.log(this.recipes[i].id)
-                        //     this.getSource(this.recipes[i].id)
-                        // }
-                        
-                    })
-
-                    
+    let app = new Vue({
+        el: '#app',
+        delimiters: ["[[", "]]"],
+        data: {
+            title: 'Search Recipies',
+            search_term: 'kale',
+            recipes: [{
+                name: '',
+                image: '',
+                sourceURL: '',
+                ingredients: [],
+                nutrition:
+                {
+                    calories: '',
+                    protein: '',
+                    fat: '',
+                    carbs: '',
                 }
+                ,
+
+            }],
+        },
+
+        methods: {
+
+            saveRecipe: function (recipe) {
+                axios({
+                    method: 'post',
+                    url: '{% url "bigshop:save" %}',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    data: recipe
+
+                }).then(response => {
+                    console.log(response.data)
+
+                })
+            },
+
+            getDetails: function (recipe) {
+                console.log(recipe)
+                axios({
+                    method: 'get',
+                    url: 'https://api.spoonacular.com/recipes/' + recipe.id + '/information?',
+                    params: {
+                        apiKey: "{{ key }}",
+
+                    }
+                }).then((response) => {
+                    // console.log(response.data)
+                    // this.recipes_info = response.data
+                    recipe.details = response.data
+                    recipe.has_details = true
+                    recipe.ingredients = response.data.extendedIngredients
+                    recipe.instructions = response.data.instructions
+                    // console.log(this.recipes_info)
+                    console.log(recipe.ingredients)
+                    console.log(recipe.instructions)
+                })
+                // send another request to get nutritional info
+                axios({
+                    method: 'get',
+                    url: 'https://api.spoonacular.com/recipes/' + recipe.id + '/nutritionWidget.json',
+                    params: {
+                        apiKey: "{{ key }}",
+
+                    }
+                }).then((response) => {
+                    let data = response.data
+                    // console.log(response.data)
+                    // console.log(response.data.calories)
+                    // this.recipes_info = response.data
+                    recipe.nutrition.calories = data.calories
+                    recipe.nutrition.protein = data.protein
+                    recipe.nutrition.carbs = data.carbs
+                    recipe.nutrition.fat = data.fat
+                    console.log(recipe.nutrition)
+
+                })
+
 
             },
 
-            created: function () {
-                this.getRecipes()
-                // axios({
-                //     method: 'get',
-                //     url: 'https://api.spoonacular.com/recipes/complexSearch',
-                //     params: {
-                //         apiKey: 'e89cb86210974fe885ee2ffc3926b546',
-                //         query: 'kale'
-                //     }
-                // }).then((response) => {
-                //     console.log(response.data)
-                // })
+            getRecipes: function (query) {
+                axios({
+                    method: 'get',
+                    url: 'https://api.spoonacular.com/recipes/complexSearch',
+                    params: {
+                        apiKey: "{{ key }}",
+                        query: 'shrimp',
+                        number: 2,
+                    }
+                }).then((response) => {
+                    let recipes = response.data.results
+                    for (let i = 0; i < recipes.length; i++) {
+                        recipes[i].has_details = false
+                        recipes[i].details = {}
+                        recipes[i].nutrition = {}
+                    }
+                    this.recipes = recipes
+                    // this.recipes = response.data.results
+                    console.log(this.recipes)
+
+                    // for (i in this.recipes){
+                    //     // console.log(this.recipes[i].id)
+                    //     this.getSource(this.recipes[i].id)
+                    // }
+
+                })
+
+
             }
-        })
-    </script>
+
+        },
+
+        created: function () {
+            this.getRecipes()
+            // axios({
+            //     method: 'get',
+            //     url: 'https://api.spoonacular.com/recipes/complexSearch',
+            //     params: {
+            //         apiKey: 'e89cb86210974fe885ee2ffc3926b546',
+            //         query: 'kale'
+            //     }
+            // }).then((response) => {
+            //     console.log(response.data)
+            // })
+        }
+    })
+</script>
 
 {% endblock %}
-
-
-

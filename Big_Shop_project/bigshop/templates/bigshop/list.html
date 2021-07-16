@@ -3,13 +3,15 @@
 {% block content %}
 
 <div id="app">
-    {% csrf_token %}
+    
     <h1>Your Shopping List</h1>
 
 
    
     <div class="row" v-for="ingredient in ingredients">
-        <h1>[[ ingredient.name ]]</h1>
+        <h3>[[ ingredient.name ]]</h3>
+        <p> Aisle:[[ ingredient.aisle ]]</p>
+        <p>[[ ingredient.amount ]] [[ingredient.unit]]</p>
         
     </div>
 
@@ -38,8 +40,8 @@
 
                     }
                 }).then((response) => {
-                    this.recipes = response.data.ingredients
-                    console.log(response.data)
+                    this.ingredients = response.data.ingredients
+                    console.log(response.data.ingredients)
                 });
             },
 
