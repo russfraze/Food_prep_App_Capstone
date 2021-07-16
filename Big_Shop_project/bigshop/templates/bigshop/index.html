@@ -2,11 +2,29 @@
 
 {% block content %}
 <style>
-       .info-panel{
+       .info-two{
             display: flex;
+            flex-direction: row;
+            justify-content: center;
             background-color: #002fa7;
             color: white;
+            padding: 20px;
+
         }
+
+       .info-one{
+           display: flex;
+           flex-direction: column;
+           justify-content: flex-start;
+           width: 300px;
+       }
+       .info-one img{
+           width: 300px;
+       }
+       .info-one button{
+           width: 120px;
+       }
+        
 </style>
 <!-- Page Content -->
 <div id="app">
@@ -15,8 +33,8 @@
 
     <div class="row">
         <div class="input-field col s12">
-            <input id="password" type="password" class="validate">
-            <label for="password">Password</label>
+            <input v-model="query" id="search" type="search" class="validate">
+            <label v-on:click="getRecipes" for="search">search</label>
         </div>
     </div>
 
@@ -24,12 +42,23 @@
 
     <div class="row" v-for="(recipe,index) in recipes">
         <!--include indicies in getDetails call -->
-        <h2 v-on:click="getDetails(recipe)">[[recipe.title]]</h2>
-        <img v-bind:src="recipe.image" alt="">
-        <div v-if="recipe.details">[[recipe.details.sourceUrl]]</div>
 
-        <div class="info-panel">
-            <div v-if="recipe.has_details">
+        <div class="info-one col m6 s12">
+            <h2>[[recipe.title]]</h2>
+            <img v-bind:src="recipe.image" alt="">
+            <div v-if="recipe.details">[[recipe.details.sourceUrl]]</div>
+            <button class="btn" v-if="recipe.has_details==false" v-on:click="getDetails(recipe)">get info</button>
+            <button v-if="recipe.has_details" v-on:click="saveRecipe(recipe)" class="btn">save</button>
+        </div>
+
+        <div class="info-two col m6 s12" v-if="recipe.has_details">
+
+            <div>
+                <div v-for="ingredient in recipe.ingredients">
+                    [[ ingredient.amount ]] [[ ingredient.unit ]] [[ ingredient.name ]]
+                </div>
+            </div>
+            <div>
                 <ul>
                     <li> calories: [[recipe.nutrition.calories]]</li>
                     <li> protein: [[recipe.nutrition.protein]]</li>
@@ -37,13 +66,7 @@
                     <li> fat: [[recipe.nutrition.fat]]</li>
                 </ul>
             </div>
-            <div v-if="recipe.details">
-                <div v-for="ingredient in recipe.ingredients">
-                    [[ ingredient.amount ]] [[ ingredient.unit ]] [[ ingredient.name ]]
-                </div>
-            </div>
 
-            <button v-if="recipe.has_details" v-on:click="saveRecipe(recipe)" class="btn">save</button>
         </div>
     </div>
 
@@ -75,8 +98,9 @@
                     carbs: '',
                 }
                 ,
-
+                
             }],
+            query: '',
         },
 
         methods: {
@@ -146,8 +170,8 @@
                     url: 'https://api.spoonacular.com/recipes/complexSearch',
                     params: {
                         apiKey: "{{ key }}",
-                        query: 'shrimp',
-                        number: 2,
+                        query: this.query,
+                        number: 10,
                     }
                 }).then((response) => {
                     let recipes = response.data.results
@@ -173,7 +197,7 @@
         },
 
         created: function () {
-            this.getRecipes()
+            // this.getRecipes()
             // axios({
             //     method: 'get',
             //     url: 'https://api.spoonacular.com/recipes/complexSearch',

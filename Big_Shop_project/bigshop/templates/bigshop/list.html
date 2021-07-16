@@ -9,7 +9,11 @@
 
    
     <div class="row" v-for="ingredient in ingredients">
-        <h3>[[ ingredient.name ]]</h3>
+        
+        <label>
+            <input type="checkbox" />
+            <span>[[ ingredient.name ]]</span>
+        </label>
         <p> Aisle:[[ ingredient.aisle ]]</p>
         <p>[[ ingredient.amount ]] [[ingredient.unit]]</p>
         
