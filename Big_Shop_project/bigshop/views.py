@@ -38,7 +38,7 @@ def recipe_book(request):
     return render(request,'bigshop/book.html')
 
 def get_saved_recipes(request):
-    recipes = SavedRecipe.objects.all()
+    recipes = SavedRecipe.objects.filter(user=request.user)
     recipes_data = []
     for recipe in recipes:
         recipes_data.append({
@@ -93,7 +93,7 @@ def add_ingredients(request):
 
 
 def get_saved_list(request):
-    ingredients = SavedListItem.objects.all()
+    ingredients = SavedListItem.objects.filter(user=request.user)
     ingredients_data = []
     for ingredient in ingredients:
         ingredients_data.append({

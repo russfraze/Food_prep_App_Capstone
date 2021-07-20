@@ -47,7 +47,7 @@
         .nav-wrapper {
             display: flex;
             flex-direction: row;
-            align-content: center;
+            align-content: flex-end;
             background-color: #002fa7;
             font-family: 'Roboto', sans-serif;
             justify-content: space-between;
@@ -57,10 +57,12 @@
             display: flex;
             flex-direction: row;
             align-items: center;
+            margin-left: 20px;
         }
 
         .logo img{
             height: 50px;
+            margin-right: 12px;
         }
 
      
@@ -76,7 +78,11 @@
 
         <nav>
             <div class="nav-wrapper">
-                <div>
+                    <div class="logo">
+                        <img src="{% static 'bigshop/white.png' %}" />
+                        <h4>The Big Shop</h4>
+                    </div>
+
                     <ul id="nav-mobile" class="left hide-on-med-and-down">
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'users:login' %}">Logout</a></li>
@@ -88,12 +94,7 @@
                         <li><a href="{% url 'users:register' %}">Register</a></li>
                         {% endif %}
                     </ul>
-                </div>
 
-                <div class="logo">
-                    <img src="{% static 'bigshop/white.png' %}" />
-                    <h4>The Big Shop</h4>
-                </div>
             </div>
         </nav>
         
