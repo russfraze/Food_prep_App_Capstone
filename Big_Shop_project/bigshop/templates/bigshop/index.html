@@ -6,10 +6,11 @@
             display: flex;
             flex-direction: row;
             justify-content: center;
+            align-items: center;
             background-color: #002fa7;
             color: white;
-            padding: 20px;
-            padding-top: 20px;
+            /* padding: 20px;
+            padding-top: 20px; */
 
         }
         .info-two .ingredients{
@@ -22,13 +23,38 @@
            display: flex;
            flex-direction: column;
            justify-content: flex-start;
-           width: 300px;
+           /* width: 300px; */
+           background-color: lightgray;
        }
        .info-one img{
            width: 300px;
+           padding-bottom: 15px;
        }
        .info-one button{
            width: 120px;
+           padding-bottom: 15px;
+           margin-bottom: 30px;
+       }
+
+       .info-main{
+           display: flex;
+           flex-direction: row;
+           justify-content: start;
+       }
+
+       @media screen and (min-width:320px) {
+           .info-main{
+               display: flex;
+               flex-wrap: wrap;
+           }
+       }
+
+       @media screen and (min-width:600px) {
+
+       }
+
+       @media screen and (min-width: 992px) {
+
        }
         
 </style>
@@ -48,31 +74,33 @@
 
     <div class="row" v-for="(recipe,index) in recipes">
         <!--include indicies in getDetails call -->
+        <div class="info-main" >
+            <div class="info-one col m6 s12">
+                <h2>[[recipe.title]]</h2>
+                <img v-bind:src="recipe.image" alt="">
+                <!-- <div v-if="recipe.details">[[recipe.details.sourceUrl]]</div> -->
+                <button class="btn" v-if="recipe.has_details==false" v-on:click="getDetails(recipe)">get info</button>
+                <button v-if="recipe.has_details" v-on:click="saveRecipe(recipe)" class="btn">save</button>
+            </div>
 
-        <div class="info-one col m6 s12">
-            <h2>[[recipe.title]]</h2>
-            <img v-bind:src="recipe.image" alt="">
-            <!-- <div v-if="recipe.details">[[recipe.details.sourceUrl]]</div> -->
-            <button class="btn" v-if="recipe.has_details==false" v-on:click="getDetails(recipe)">get info</button>
-            <button v-if="recipe.has_details" v-on:click="saveRecipe(recipe)" class="btn">save</button>
-        </div>
+            <div class="info-two col m6 s12" v-if="recipe.has_details">
 
-        <div class="info-two col m6 s12" v-if="recipe.has_details">
-
-            <div class="ingredients">
-                <div v-for="ingredient in recipe.ingredients">
-                    [[ ingredient.amount ]] [[ ingredient.unit ]] [[ ingredient.name ]]
+                
+                <div class="ingredients">
+                    <div v-for="ingredient in recipe.ingredients">
+                        [[ ingredient.amount ]] [[ ingredient.unit ]] [[ ingredient.name ]]
+                    </div>
                 </div>
-            </div>
-            <div>
-                <ul>
-                    <li> calories: [[recipe.nutrition.calories]]</li>
-                    <li> protein: [[recipe.nutrition.protein]]</li>
-                    <li> carbs: [[recipe.nutrition.carbs]]</li>
-                    <li> fat: [[recipe.nutrition.fat]]</li>
-                </ul>
-            </div>
+                <div>
+                    <ul>
+                        <li> calories: [[recipe.nutrition.calories]]</li>
+                        <li> protein: [[recipe.nutrition.protein]]</li>
+                        <li> carbs: [[recipe.nutrition.carbs]]</li>
+                        <li> fat: [[recipe.nutrition.fat]]</li>
+                    </ul>
+                </div>
 
+            </div>
         </div>
     </div>
 
