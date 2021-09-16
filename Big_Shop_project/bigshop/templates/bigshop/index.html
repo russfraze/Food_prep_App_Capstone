@@ -2,6 +2,10 @@
 
 {% block content %}
 <style>
+       
+       h2 {
+
+       }
        .info-two{
             display: flex;
             flex-direction: row;
@@ -25,6 +29,7 @@
            justify-content: flex-start;
            /* width: 300px; */
            background-color: lightgray;
+           /* min-height: 1300px; */
        }
        .info-one img{
            width: 300px;
@@ -39,7 +44,8 @@
        .info-main{
            display: flex;
            flex-direction: row;
-           justify-content: start;
+           justify-content: center;
+           background-color: lightgray;
        }
 
        @media screen and (min-width:320px) {
@@ -75,7 +81,7 @@
     <div class="row" v-for="(recipe,index) in recipes">
         <!--include indicies in getDetails call -->
         <div class="info-main" >
-            <div class="info-one col m6 s12">
+            <div>
                 <h2>[[recipe.title]]</h2>
                 <img v-bind:src="recipe.image" alt="">
                 <!-- <div v-if="recipe.details">[[recipe.details.sourceUrl]]</div> -->
@@ -83,7 +89,7 @@
                 <button v-if="recipe.has_details" v-on:click="saveRecipe(recipe)" class="btn">save</button>
             </div>
 
-            <div class="info-two col m6 s12" v-if="recipe.has_details">
+            <div class="info-two col m5 s12" v-if="recipe.has_details">
 
                 
                 <div class="ingredients">
@@ -93,6 +99,7 @@
                 </div>
                 <div>
                     <ul>
+                        <li>Macro Nutrition</li>
                         <li> calories: [[recipe.nutrition.calories]]</li>
                         <li> protein: [[recipe.nutrition.protein]]</li>
                         <li> carbs: [[recipe.nutrition.carbs]]</li>

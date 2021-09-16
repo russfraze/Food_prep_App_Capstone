@@ -30,7 +30,7 @@
         h2 {
             font-family: 'Oswald', sans-serif;
             color: #002fa7;
-            size: 10px;
+            font-size: 32px;
         }
 
         h4 {
@@ -73,43 +73,37 @@
 
 <body>
     <!-- Page Content -->
-    <div>
 
 
-        <nav>
-            <div class="nav-wrapper">
-                    <div class="logo">
-                        <img src="{% static 'bigshop/white.png' %}" />
-                        <h4>The Big Shop</h4>
-                    </div>
+    <nav>
+        <div class="nav-wrapper">
+                <div class="logo">
+                    <img src="{% static 'bigshop/white.png' %}" />
+                    <h4>The Big Shop</h4>
+                </div>
 
-                    <ul id="nav-mobile" class="left hide-on-med-and-down">
-                        {% if user.is_authenticated %}
-                        <li><a href="{% url 'users:login' %}">Logout</a></li>
-                        <li><a href="{% url 'bigshop:index' %}">Home</a></li>
-                        <li><a href="{% url 'bigshop:recipe_book' %}">Recipe Book</a></li>
-                        <li><a href="{% url 'bigshop:grocery_list' %}">Grocery List</a></li>
-                        {% else %}
-                        <li><a href="{% url 'users:login' %}">Login</a></li>
-                        <li><a href="{% url 'users:register' %}">Register</a></li>
-                        {% endif %}
-                    </ul>
+                <ul id="nav-mobile" class="left hide-on-med-and-down">
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'users:login' %}">Logout</a></li>
+                    <li><a href="{% url 'bigshop:index' %}">Home</a></li>
+                    <li><a href="{% url 'bigshop:recipe_book' %}">Recipe Book</a></li>
+                    <li><a href="{% url 'bigshop:grocery_list' %}">Grocery List</a></li>
+                    {% else %}
+                    <li><a href="{% url 'users:login' %}">Login</a></li>
+                    <li><a href="{% url 'users:register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
 
-            </div>
-        </nav>
-        
-        <div class="container">
-            <h1>{% block title %}{% endblock %}</h1>
-            <main>
-                {% block content %} {% endblock %}
-            </main>
         </div>
-        
-
-
-
-
+    </nav>
+    
+    <div class="container">
+        <h1>{% block title %}{% endblock %}</h1>
+        <main>
+            {% block content %} {% endblock %}
+        </main>
     </div>
+        
 
     <script type="text/javascript">
         // initialize Materialize components

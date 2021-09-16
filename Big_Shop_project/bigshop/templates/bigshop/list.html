@@ -6,21 +6,20 @@
     
     <h1>Your Shopping List</h1>
 
-
-   
     <div class="row" v-for="ingredient in ingredients">
         
         <label>
             <input type="checkbox" />
             <span>[[ ingredient.name ]]</span>
+            <span>[[ ingredient.amount ]]</span>
+            <span>[[ingredient.unit]]</span>
         </label>
         <p> Aisle:[[ ingredient.aisle ]]</p>
-        <p>[[ ingredient.amount ]] [[ingredient.unit]]</p>
         
     </div>
 
-
-
+    <a class="btn" v-on:click="clearList">clear</a> 
+ 
 </div>
 
 <script type="text/javascript">
@@ -44,9 +43,29 @@
 
                     }
                 }).then((response) => {
+                    
+                    for ( i in response.data.ingredients ){
+                        sorted = response.data.ingredients[i]['aisle']
+                        //sorted.sort()
+                        console.log(sorted)
+                    }
                     this.ingredients = response.data.ingredients
-                    console.log(response.data.ingredients)
+                    console.log(response.data.ingredients[0]['aisle']) 
                 });
+            },
+
+            clearList: function () {
+                //console.log('dafuk?')
+                axios({
+                    method: 'get',
+                    url: '{% url "bigshop:clear_list" %}',
+                    params: {
+                        //id: id
+                    }
+                }).then(response => {
+                    this.getListItems()
+                })
+
             },
 
         },

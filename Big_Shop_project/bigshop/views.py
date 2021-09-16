@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, reverse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 import json
@@ -105,3 +105,8 @@ def get_saved_list(request):
         })
     return JsonResponse({'ingredients': ingredients_data})
 
+
+def clear_list(request):
+    clear = SavedListItem.objects.filter(user=request.user)
+    clear.delete()
+    return HttpResponseRedirect(reverse('bigshop:grocery_list')) 

@@ -11,7 +11,8 @@ urlpatterns = [
     path('get_saved_recipes/', views.get_saved_recipes, name='get_saved_recipes'),
     path('delete/', views.delete, name='delete'),
     path('add_ingredients/', views.add_ingredients, name='add_ingredients'),
-    path('get_saved_list/', views.get_saved_list, name='get_saved_list')
+    path('get_saved_list/', views.get_saved_list, name='get_saved_list'),
+    path('clear_list/', views.clear_list, name='clear_list')
 
 ]
 
