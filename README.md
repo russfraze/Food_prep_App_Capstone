@@ -15,10 +15,10 @@ Vue
 Materialize  
 
 ## Functionality
-Search recipies
-get ingredients and macro nutrition
-Save recipies and food profiles   
-Build shopping list   
+Search recipies  
+get ingredients and macro nutrition  
+Save recipies and food profiles     
+Build shopping list     
 
 
 
