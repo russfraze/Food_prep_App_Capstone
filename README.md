@@ -3,7 +3,11 @@ Repository for my Capstone project
 
 
 ## Project Overview
-THE BIG SHOP is a Django app that simplifies food prep with the perfect weekly shopping list. Using the Spoontacular API, users can search and save recipies based off their dietary considerations, edit and save shopping lists, and create list templates for future use. 
+THE BIG SHOP 
+
+A recipe app built with the Spoonacular API. 
+
+In my experience as a househusband, I've found one of the biggest obstacles to healthy eating is a lack of preparation and organization. For me, aiming for one big trip to the grocery store per week helps to save time, energy, and guesswork, resulting in greater motivation to stick to the plan. This app gives you the tools to search for new recipes, track macro nutrition, create a recipe book, and build a shopping list, all with the aim of optimizing meal preperation.    
 
 ### Libraries
 Django  
@@ -19,31 +23,14 @@ Edit / customize recipies
 save grocery list
 
 
-NEXT STEPS:
-> Display saved recipes on Recipe Book page
-> Create delete button to delete recipes 
-> Create add to shopping list button 
-> Display ingredienst on Shopping List page by isle, display reicipe name with 
-> Make cross out button that turns shopping list item grey and adds line through 
-> Save shopping list 
-
-Walk through:   
-When the user visits the site, they see the home page where they are prompted to login or register. Once logged in, their profile / personal shopping list generator is displayed. 
-From here, users can build a weekly shopping list by adding recipies from their saved recipies and foods, or searching for new ones. When a recipe is added to the shopping list, it's nutrient profile is added to the nutrient counter, letting the user easily calculate and adjust. Once the list is built, users can save their list for easy use while shopping and each list can be saved as a list template. 
+ 
+ 
 
 
 
 
 
-## Data Model 
-
-saving and editing whole recipies
 
 
 
-## Schedule 
-Week 1: Define data models, routing views and page layout
 
-Week 2: User login / authentication system 
-
-Week 3: Overflow, Styling and finish
